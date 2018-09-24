@@ -5,13 +5,36 @@ class GetSong:
 
 
     def getSongList(self,url,match="artist"):
+        """
+        アーティストページまたは検索ページの歌詞のURLを取得する
+        matchの指定方法
+        artist : アーティストページ
+        search : 検索ページ
+
+        Parameters
+        ----------
+        url : str
+        アーティストページまたは検索ページのURL
+        match : str
+        アーティストページか検索ページの指定
+        指定方法
+        artist : アーティストページ
+        search : 検索ページ
+
+        generator
+        ----------
+        slist : str
+        歌詞のURL
+
+        """
         r = requests.get(url)
         soup = BeautifulSoup(r.content, "html.parser")
         if match == "artist":
             num = soup.select_one("""#search_result > div.s_result.clearfix > div.s_re_left > span:nth-of-type(3)""").text
-        else:
+        elif match == "search":
             num = soup.select_one("#search_result > div.s_result.clearfix > div.s_re_left > span:nth-of-type(4)").text
-
+        else:
+            print("引数エラー")
 
         if num.count("201-"):
             num = int(num.replace("201-",""))
@@ -46,16 +69,31 @@ class GetSong:
             yield slist
 
     def getWordofsong(self,url):
-            utaNeturl = "https://www.uta-net.com" + url
-            r = requests.get(utaNeturl)
-            soup = BeautifulSoup(r.content, "html.parser")
-            title = soup.select_one("#view_kashi > div > div.title > h2").text
-            data = str(soup.select_one("#kashi_area"))
-            data = data.replace("<br/>","\n").replace("<br>","\n").replace("""<div id="kashi_area" itemprop="text">""","").replace("""</br></br></div>""","")
-            title = soup.select_one("#view_kashi > div > div.title > h2").text
-            if title.count("/"):
-                title = title.replace("/","／")
-            return title,data
+        """
+        歌詞ページから歌のタイトルと歌詞を取得する
+
+        Parameters
+        ----------
+        url : str
+        歌詞ページのURL
+        Return
+        ----------
+        title : str
+        歌詞のタイトル
+        data : str
+        歌詞
+        """
+
+        utaNeturl = "https://www.uta-net.com" + url
+        r = requests.get(utaNeturl)
+        soup = BeautifulSoup(r.content, "html.parser")
+        title = soup.select_one("#view_kashi > div > div.title > h2").text
+        data = str(soup.select_one("#kashi_area"))
+        data = data.replace("<br/>","\n").replace("<br>","\n").replace("""<div id="kashi_area" itemprop="text">""","").replace("""</br></br></div>""","")
+        title = soup.select_one("#view_kashi > div > div.title > h2").text
+        if title.count("/"):
+            title = title.replace("/","／")
+        return title,data
 
 if __name__ == '__main__':
     a = GetSong()
