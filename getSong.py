@@ -75,7 +75,7 @@ class GetSong:
         Parameters
         ----------
         url : str
-        歌詞ページのURL
+        歌詞ページのURL(/song/XXXXXX)
         Return
         ----------
         title : str
@@ -99,9 +99,9 @@ if __name__ == '__main__':
     a = GetSong()
     Input_url = input("urlを入力:")
     print(Input_url)
-    kashiList = a.getSongList(str(Input_url),match="search")
+    kashiList = a.getSongList(str(Input_url),match="artist")
     num = 0
-    utaNeturl = "https://www.uta-net.com"
+    # utaNeturl = "https://www.uta-net.com"
     for kashi in kashiList:
-        title,data = a.getWordofsong(utaNeturl+kashi)
+        title,data = a.getWordofsong(kashi)
         print(title)
