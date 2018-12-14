@@ -103,5 +103,5 @@ if __name__ == '__main__':
     kashiList = song.getSongList(str(Input_url),match="artist")
     # utaNeturl = "https://www.uta-net.com"
     for kashi in kashiList:
-        title,data = a.getWordofsong(kashi)
+        title,data = song.getWordofsong(kashi)
         print(title)
