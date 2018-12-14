@@ -97,11 +97,10 @@ class GetSong:
         return title,data
 
 if __name__ == '__main__':
-    a = GetSong()
+    song = GetSong()
     Input_url = input("urlを入力:")
     print(Input_url)
-    kashiList = a.getSongList(str(Input_url),match="artist")
-    num = 0
+    kashiList = song.getSongList(str(Input_url),match="artist")
     # utaNeturl = "https://www.uta-net.com"
     for kashi in kashiList:
         title,data = a.getWordofsong(kashi)
