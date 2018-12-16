@@ -53,7 +53,7 @@ class GetSong:
             print("引数エラー")
         songlist = []
         tbnum = int(((num-50)/30) + 2)
-        for tb in range(3,tbnum+1):
+        for tb in range(3,tbnum+2):
             for i in range(1,31):
                 body = soup.select("""{} > div:nth-of-type({}) > table > tbody > tr:nth-of-type({}) > td.side.td1 > a""".format(tag,tb,i))
                 for elem in body:
