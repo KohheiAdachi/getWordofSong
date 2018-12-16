@@ -96,6 +96,10 @@ class GetSong:
             title = title.replace("/","／")
         return title,data
 
+    def save_kashi(self,title,kashi,dirTitle):
+        with open(dirTitle+title+".txt",mode="w") as f:
+            f.write(kashi)
+
 if __name__ == '__main__':
     song = GetSong()
     Input_url = input("urlを入力:")
